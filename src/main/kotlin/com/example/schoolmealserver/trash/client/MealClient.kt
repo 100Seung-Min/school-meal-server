@@ -1,4 +1,4 @@
-package com.example.schoolmealserver.domain.meal.client
+package com.example.schoolmealserver.trash.client
 
 import com.example.schoolmealserver.domain.meal.dto.MealDto
 import org.springframework.cloud.openfeign.FeignClient
