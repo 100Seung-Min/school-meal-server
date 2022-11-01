@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam
 
 @FeignClient(name = "mealClient", url = "https://open.neis.go.kr/hub/mealServiceDietInfo")
 interface MealClient {
-    @GetMapping("", produces = [MediaType.APPLICATION_JSON_VALUE])
+    @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
     fun execute(
             @RequestParam(name = "KEY") key: String,
             @RequestParam(name = "Type") type: String,
