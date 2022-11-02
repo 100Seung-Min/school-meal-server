@@ -5,6 +5,7 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.io.BufferedReader
@@ -15,13 +16,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @RestController
+@RequestMapping("/time")
 class TimeController {
 
     private val dayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
     private val startDay = SimpleDateFormat("yyyyMMdd").format(Date()).toInt() + (1 - dayOfWeek)
     private val endDay = SimpleDateFormat("yyyyMMdd").format(Date()).toInt() + (7 - dayOfWeek)
 
-    @GetMapping("/time/his")
+    @GetMapping("/his")
     fun timeHis(
             @RequestParam(name = "cityCode") cityCode: String,
             @RequestParam(name = "schoolCode") schoolCode: String,
@@ -31,7 +33,7 @@ class TimeController {
         return connectTime(URL("https://open.neis.go.kr/hub/hisTimetable?KEY=dfed562db5ef4e88b1e71079c0039615&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=$cityCode&SD_SCHUL_CODE=$schoolCode&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=$grade&CLASS_NM=$`class`"), "his")
     }
 
-    @GetMapping("/time/mis")
+    @GetMapping("/mis")
     fun timeMis(
             @RequestParam(name = "cityCode") cityCode: String,
             @RequestParam(name = "schoolCode") schoolCode: String,
@@ -41,7 +43,7 @@ class TimeController {
         return connectTime(URL("https://open.neis.go.kr/hub/misTimetable?KEY=dfed562db5ef4e88b1e71079c0039615&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=$cityCode&SD_SCHUL_CODE=$schoolCode&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=$grade&CLASS_NM=$`class`"), "mis")
     }
 
-    @GetMapping("time/els")
+    @GetMapping("/els")
     fun timeEls(
             @RequestParam(name = "cityCode") cityCode: String,
             @RequestParam(name = "schoolCode") schoolCode: String,
