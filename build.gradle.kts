@@ -22,6 +22,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web:2.7.5")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:3.1.4")
     implementation("com.google.code.gson:gson:2.10")
+    implementation("net.nurigo:javaSDK:2.2")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
