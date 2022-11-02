@@ -2,15 +2,17 @@ package com.example.schoolmealserver.domain.register.controller
 
 import com.example.schoolmealserver.global.service.CertificationService
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.util.Random
 
 @RestController
+@RequestMapping("/register")
 class RegisterController {
-    @GetMapping("register/phone")
+    @GetMapping("/phone")
     fun phone(
-            @RequestParam("phone") phone: String
+            @RequestParam(name = "phone") phone: String
     ): String {
         val rand = Random()
         var certificateNumber = ""
