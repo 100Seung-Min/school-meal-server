@@ -1,11 +1,13 @@
 package com.example.schoolmealserver.domain.meal.controller
 
 import com.example.schoolmealserver.domain.meal.dto.MealDto
+import com.example.schoolmealserver.domain.meal.request.MealMonthRequest
+import com.example.schoolmealserver.domain.meal.request.MealRequest
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -16,30 +18,16 @@ import java.net.URL
 class MealController {
     @GetMapping("/meal")
     fun meal(
-            @RequestParam(name = "cityCode") cityCode: String,
-            @RequestParam(name = "schoolCode") schoolCode: String,
-            @RequestParam(name = "day") day: String
+            @RequestBody mealRequest: MealRequest
     ): MealDto? {
-        return connectMeal(URL("https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=dfed562db5ef4e88b1e71079c0039615&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=$cityCode&SD_SCHUL_CODE=$schoolCode&MLSV_YMD=$day"))
-    }
-
-    @GetMapping("/meal/week")
-    fun mealWeek(
-            @RequestParam(name = "cityCode") cityCode: String,
-            @RequestParam(name = "schoolCode") schoolCode: String,
-            @RequestParam(name = "startDay") startDay: String,
-            @RequestParam(name = "endDay") endDay: String
-    ): MealDto? {
-        return connectMeal(URL("https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=dfed562db5ef4e88b1e71079c0039615&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=$cityCode&SD_SCHUL_CODE=$schoolCode&MLSV_FROM_YMD=$startDay&MLSV_TO_YMD=$endDay"))
+        return connectMeal(URL("https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=dfed562db5ef4e88b1e71079c0039615&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${mealRequest.cityCode}&SD_SCHUL_CODE=${mealRequest.schoolCode}&MLSV_YMD=${mealRequest.day}"))
     }
 
     @GetMapping("/meal/month")
     fun mealMonth(
-            @RequestParam(name = "cityCode") cityCode: String,
-            @RequestParam(name = "schoolCode") schoolCode: String,
-            @RequestParam(name = "month") month: String
+            @RequestBody mealMonthRequest: MealMonthRequest
     ): MealDto? {
-        return connectMeal(URL("https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=dfed562db5ef4e88b1e71079c0039615&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=$cityCode&SD_SCHUL_CODE=$schoolCode&MLSV_YMD=$month"))
+        return connectMeal(URL("https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=dfed562db5ef4e88b1e71079c0039615&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${mealMonthRequest.cityCode}&SD_SCHUL_CODE=${mealMonthRequest.schoolCode}&MLSV_YMD=$${mealMonthRequest.month}"))
     }
 
     private fun connectMeal(url: URL): MealDto? {
