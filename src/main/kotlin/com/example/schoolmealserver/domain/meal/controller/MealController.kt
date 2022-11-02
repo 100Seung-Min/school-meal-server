@@ -8,6 +8,7 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -15,15 +16,16 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 @RestController
+@RequestMapping("/meal")
 class MealController {
-    @GetMapping("/meal")
+    @GetMapping
     fun meal(
             @RequestBody mealRequest: MealRequest
     ): MealDto? {
         return connectMeal(URL("https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=dfed562db5ef4e88b1e71079c0039615&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=${mealRequest.cityCode}&SD_SCHUL_CODE=${mealRequest.schoolCode}&MLSV_YMD=${mealRequest.day}"))
     }
 
-    @GetMapping("/meal/month")
+    @GetMapping("/month")
     fun mealMonth(
             @RequestBody mealMonthRequest: MealMonthRequest
     ): MealDto? {
