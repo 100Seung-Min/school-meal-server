@@ -1,6 +1,6 @@
-package com.example.schoolmealserver.domain.schedule.dto
+package com.example.schoolmealserver.domain.schedule.payload.response
 
-data class ScheduleDto(
+data class ScheduleResponse(
         val row: List<ScheduleItem>
 ) {
     data class ScheduleItem(

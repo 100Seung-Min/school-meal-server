@@ -1,6 +1,6 @@
 package com.example.schoolmealserver.domain.schedule.controller
 
-import com.example.schoolmealserver.domain.schedule.dto.ScheduleDto
+import com.example.schoolmealserver.domain.schedule.payload.response.ScheduleResponse
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -19,11 +19,11 @@ class ScheduleController {
             @RequestParam(name = "cityCode") cityCode: String,
             @RequestParam(name = "schoolCode") schoolCode: String,
             @RequestParam(name = "month") month: String
-    ): ScheduleDto? {
+    ): ScheduleResponse? {
         return connectSchedule(URL("https://open.neis.go.kr/hub/SchoolSchedule?KEY=dfed562db5ef4e88b1e71079c0039615&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=$cityCode&SD_SCHUL_CODE=$schoolCode&AA_YMD=$month"))
     }
 
-    private fun connectSchedule(url: URL): ScheduleDto? {
+    private fun connectSchedule(url: URL): ScheduleResponse? {
         val result = StringBuilder()
         val urlConnection = url.openConnection() as HttpURLConnection
         urlConnection.requestMethod = "GET"
@@ -40,17 +40,17 @@ class ScheduleController {
         return parseJson(result.toString())
     }
 
-    private fun parseJson(jsonData: String): ScheduleDto? {
-        var response: ScheduleDto? = null
+    private fun parseJson(jsonData: String): ScheduleResponse? {
+        var response: ScheduleResponse? = null
         try {
             val jsonParser = JsonParser()
             val jsonObject = jsonParser.parse(jsonData) as JsonObject
             val jsonResponse = jsonObject["SchoolSchedule"] as JsonArray
             val jsonRow = jsonResponse.get(1) as JsonObject
             val jsonData = jsonRow["row"] as JsonArray
-            var array = listOf<ScheduleDto.ScheduleItem>()
+            var array = listOf<ScheduleResponse.ScheduleItem>()
             jsonData.forEach {it as JsonObject
-                val item = ScheduleDto.ScheduleItem(
+                val item = ScheduleResponse.ScheduleItem(
                         it["EVENT_NM"].toString(),
                         it["AA_YMD"].toString()
                 )
@@ -58,7 +58,7 @@ class ScheduleController {
                     array = array.plus(item)
                 }
             }
-            response = ScheduleDto(array)
+            response = ScheduleResponse(array)
 
         } catch (e: Exception) {
             e.printStackTrace()
