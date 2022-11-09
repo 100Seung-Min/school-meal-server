@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface SignUpRepository: CrudRepository<UserEntity, Int> {
-
+    fun findById(id: String): UserEntity?
 }

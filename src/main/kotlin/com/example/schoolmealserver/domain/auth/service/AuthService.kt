@@ -1,7 +1,7 @@
 package com.example.schoolmealserver.domain.auth.service
 
 import com.example.schoolmealserver.domain.auth.UserEntity
-import com.example.schoolmealserver.domain.auth.payload.request.PhoneRequest
+import com.example.schoolmealserver.domain.auth.payload.request.LoginRequest
 import com.example.schoolmealserver.domain.auth.payload.request.SignUpRequest
 import com.example.schoolmealserver.domain.auth.repository.SignUpRepository
 import net.nurigo.java_sdk.api.Message
@@ -28,6 +28,15 @@ class AuthService(
                 )
         )
     }
+
+    fun login(loginRequest: LoginRequest): Boolean =
+            signUpRepository.findById(loginRequest.id).let {
+                if (it == null)
+                    return false
+                else if (it.password != loginRequest.password)
+                    return false
+                return true
+            }
 
     fun certificatePhone(phone: String, number: String) {
         val coolsms = Message(apiKey, apiSecret)

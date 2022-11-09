@@ -1,5 +1,6 @@
 package com.example.schoolmealserver.domain.auth.controller
 
+import com.example.schoolmealserver.domain.auth.payload.request.LoginRequest
 import com.example.schoolmealserver.domain.auth.payload.request.PhoneRequest
 import com.example.schoolmealserver.domain.auth.payload.request.SignUpRequest
 import com.example.schoolmealserver.domain.auth.service.AuthService
@@ -22,6 +23,12 @@ class AuthController(
     ): Boolean {
         authService.signUp(signUpRequest)
         return true
+    }
+    @GetMapping("/login")
+    fun login(
+            @RequestBody loginRequest: LoginRequest
+    ): Boolean {
+        return authService.login(loginRequest)
     }
     @GetMapping("/phone")
     fun phone(
