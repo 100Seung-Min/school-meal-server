@@ -1,9 +1,9 @@
-package com.example.schoolmealserver.global.service
+package com.example.schoolmealserver.domain.auth.service
 
 import net.nurigo.java_sdk.api.Message
 
 
-class CertificationService {
+class AuthService {
     private val apiKey = "NCSZ0AWENYOWEMAV"
     private val apiSecret = "XNUHSSWCI0JS2D6RZAVFZ3NVXHJBB5GW"
 
