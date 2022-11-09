@@ -1,6 +1,6 @@
-package com.example.schoolmealserver.domain.time.dto
+package com.example.schoolmealserver.domain.time.payload.response
 
-data class TimeDto(
+data class TimeReponse(
         val row: List<TimeItem>
 ) {
     data class TimeItem(

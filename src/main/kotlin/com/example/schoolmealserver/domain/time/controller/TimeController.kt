@@ -1,6 +1,6 @@
 package com.example.schoolmealserver.domain.time.controller
 
-import com.example.schoolmealserver.domain.time.dto.TimeDto
+import com.example.schoolmealserver.domain.time.payload.response.TimeReponse
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -29,7 +29,7 @@ class TimeController {
             @RequestParam(name = "schoolCode") schoolCode: String,
             @RequestParam(name = "grade") grade: String,
             @RequestParam("class") `class`: String
-    ): TimeDto? {
+    ): TimeReponse? {
         return connectTime(URL("https://open.neis.go.kr/hub/hisTimetable?KEY=dfed562db5ef4e88b1e71079c0039615&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=$cityCode&SD_SCHUL_CODE=$schoolCode&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=$grade&CLASS_NM=$`class`"), "his")
     }
 
@@ -39,7 +39,7 @@ class TimeController {
             @RequestParam(name = "schoolCode") schoolCode: String,
             @RequestParam(name = "grade") grade: String,
             @RequestParam("class") `class`: String
-    ): TimeDto? {
+    ): TimeReponse? {
         return connectTime(URL("https://open.neis.go.kr/hub/misTimetable?KEY=dfed562db5ef4e88b1e71079c0039615&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=$cityCode&SD_SCHUL_CODE=$schoolCode&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=$grade&CLASS_NM=$`class`"), "mis")
     }
 
@@ -49,11 +49,11 @@ class TimeController {
             @RequestParam(name = "schoolCode") schoolCode: String,
             @RequestParam(name = "grade") grade: String,
             @RequestParam("class") `class`: String
-    ): TimeDto? {
+    ): TimeReponse? {
         return connectTime(URL("https://open.neis.go.kr/hub/elsTimetable?KEY=dfed562db5ef4e88b1e71079c0039615&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=$cityCode&SD_SCHUL_CODE=$schoolCode&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=$grade&CLASS_NM=$`class`"), "els")
     }
 
-    private fun connectTime(url: URL, type: String): TimeDto? {
+    private fun connectTime(url: URL, type: String): TimeReponse? {
         val result = StringBuilder()
         val urlConnection = url.openConnection() as HttpURLConnection
         urlConnection.requestMethod = "GET"
@@ -70,8 +70,8 @@ class TimeController {
         return parseJson(result.toString(), type)
     }
 
-    private fun parseJson(jsonData: String, type: String): TimeDto? {
-        var response: TimeDto? = null
+    private fun parseJson(jsonData: String, type: String): TimeReponse? {
+        var response: TimeReponse? = null
         try {
             val jsonParser = JsonParser()
             val jsonObject = jsonParser.parse(jsonData) as JsonObject
@@ -82,15 +82,15 @@ class TimeController {
             }
             val jsonRow = jsonResponse.get(1) as JsonObject
             val jsonData = jsonRow["row"] as JsonArray
-            var array = listOf<TimeDto.TimeItem>()
+            var array = listOf<TimeReponse.TimeItem>()
             jsonData.forEach {it as JsonObject
-                val item = TimeDto.TimeItem(
+                val item = TimeReponse.TimeItem(
                         it["PERIO"].toString(),
                         it["ITRT_CNTNT"].toString(),
                 )
                 array = array.plus(item)
             }
-            response = TimeDto(array)
+            response = TimeReponse(array)
 
         } catch (e: Exception) {
             e.printStackTrace()
