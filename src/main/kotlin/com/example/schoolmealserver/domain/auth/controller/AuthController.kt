@@ -1,7 +1,9 @@
 package com.example.schoolmealserver.domain.auth.controller
 
 import com.example.schoolmealserver.domain.auth.payload.request.PhoneRequest
+import com.example.schoolmealserver.domain.auth.payload.request.SignUpRequest
 import com.example.schoolmealserver.domain.auth.service.AuthService
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -11,11 +13,14 @@ import java.util.Random
 
 @RestController
 @RequestMapping("/auth")
-class AuthController {
-    @GetMapping("signUp")
+class AuthController(
+        private val authService: AuthService
+){
+    @GetMapping("/signUp")
     fun signUp(
-
+            @RequestBody signUpRequest: SignUpRequest
     ): Boolean {
+        authService.signUp(signUpRequest)
         return true
     }
     @GetMapping("/phone")
@@ -27,7 +32,7 @@ class AuthController {
         for (i in 0..4) {
             certificateNumber += rand.nextInt(10).toString()
         }
-        AuthService().certificatePhone(phoneRequest.phone, certificateNumber)
+        authService.certificatePhone(phoneRequest.phone, certificateNumber)
         return certificateNumber
     }
 }
