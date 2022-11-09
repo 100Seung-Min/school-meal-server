@@ -1,5 +1,6 @@
 package com.example.schoolmealserver.domain.auth.service
 
+import com.example.schoolmealserver.domain.auth.payload.request.PhoneRequest
 import net.nurigo.java_sdk.api.Message
 
 
