@@ -1,4 +1,4 @@
-package com.example.schoolmealserver.domain.meal.request
+package com.example.schoolmealserver.domain.meal.payload.request
 
 data class MealMonthRequest(
         val cityCode: String,

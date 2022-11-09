@@ -1,6 +1,6 @@
 package com.example.schoolmealserver.trash.client
 
-import com.example.schoolmealserver.domain.meal.dto.MealDto
+import com.example.schoolmealserver.domain.meal.payload.response.MealResponse
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
@@ -17,5 +17,5 @@ interface MealClient {
             @RequestParam(name = "ATPT_OFCDC_SC_CODE") cityCode: String,
             @RequestParam(name = "SD_SCHUL_CODE") schoolCode: String,
             @RequestParam(name = "MLSV_YMD") dateCode: String
-    ): MealDto
+    ): MealResponse
 }

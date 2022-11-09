@@ -1,7 +1,7 @@
 package com.example.schoolmealserver.trash.service
 
 import com.example.schoolmealserver.trash.client.MealClient
-import com.example.schoolmealserver.domain.meal.dto.MealDto
+import com.example.schoolmealserver.domain.meal.payload.response.MealResponse
 import org.springframework.stereotype.Service
 import java.text.SimpleDateFormat
 import java.util.*
@@ -10,7 +10,7 @@ import java.util.*
 class MealService(
         private val mealClient: MealClient
 ) {
-    fun getMeal(): MealDto {
+    fun getMeal(): MealResponse {
         return mealClient.execute(
                 key = "dfed562db5ef4e88b1e71079c0039615",
                 type = "json",

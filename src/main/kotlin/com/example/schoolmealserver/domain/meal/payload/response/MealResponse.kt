@@ -1,6 +1,6 @@
-package com.example.schoolmealserver.domain.meal.dto
+package com.example.schoolmealserver.domain.meal.payload.response
 
-data class MealDto(
+data class MealResponse(
         val row: List<MealItem>
 ) {
     data class MealItem(
