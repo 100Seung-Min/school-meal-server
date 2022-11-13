@@ -1,7 +1,7 @@
 package com.example.schoolmealserver.trash.service
 
 import com.example.schoolmealserver.trash.client.MealClient
-import com.example.schoolmealserver.domain.meal.payload.response.MealResponse
+import com.example.schoolmealserver.domain.school.payload.response.MealResponse
 import org.springframework.stereotype.Service
 import java.text.SimpleDateFormat
 import java.util.*

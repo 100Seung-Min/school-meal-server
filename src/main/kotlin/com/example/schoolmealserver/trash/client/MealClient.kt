@@ -1,6 +1,6 @@
 package com.example.schoolmealserver.trash.client
 
-import com.example.schoolmealserver.domain.meal.payload.response.MealResponse
+import com.example.schoolmealserver.domain.school.payload.response.MealResponse
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping

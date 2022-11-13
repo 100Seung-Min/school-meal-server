@@ -1,8 +1,8 @@
 package com.example.schoolmealserver.global.openapi
 
-import com.example.schoolmealserver.domain.meal.payload.response.MealResponse
-import com.example.schoolmealserver.domain.schedule.payload.response.ScheduleResponse
-import com.example.schoolmealserver.domain.time.payload.response.TimeReponse
+import com.example.schoolmealserver.domain.school.payload.response.MealResponse
+import com.example.schoolmealserver.domain.school.payload.response.ScheduleResponse
+import com.example.schoolmealserver.domain.school.payload.response.TimeReponse
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
