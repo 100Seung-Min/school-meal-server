@@ -1,4 +1,4 @@
-package com.example.schoolmealserver.domain.meal.payload.response
+package com.example.schoolmealserver.domain.school.payload.response
 
 data class MealResponse(
         val row: List<MealItem>
