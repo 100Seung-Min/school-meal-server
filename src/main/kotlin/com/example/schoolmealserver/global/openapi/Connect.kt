@@ -131,11 +131,13 @@ private fun parseJson(jsonData: String, type: String): TimeReponse? {
         val jsonData = jsonRow["row"] as JsonArray
         var array = listOf<TimeReponse.TimeItem>()
         jsonData.forEach {it as JsonObject
-            val item = TimeReponse.TimeItem(
-                    it["PERIO"].toString(),
-                    it["ITRT_CNTNT"].toString(),
-            )
-            array = array.plus(item)
+            if (it["ITRT_CNTNT"].toString() != "\"토요휴업일\"") {
+                val item = TimeReponse.TimeItem(
+                        it["PERIO"].toString(),
+                        it["ITRT_CNTNT"].toString(),
+                )
+                array = array.plus(item)
+            }
         }
         response = TimeReponse(array)
 

@@ -27,7 +27,8 @@ class SchoolController(
             @RequestHeader("id") id: String,
             @RequestParam(name = "month") month: String
     ): ScheduleResponse? {
-        return connectSchedule(URL("${URLList.schedule}ATPT_OFCDC_SC_CODE=${authService.getUser(id).cityCode}&SD_SCHUL_CODE=${authService.getUser(id).schoolCode}&AA_YMD=$month"))
+        val user = authService.getUser(id)
+        return connectSchedule(URL("${URLList.schedule}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&AA_YMD=$month"))
     }
 
     @GetMapping("/meal")
@@ -35,7 +36,8 @@ class SchoolController(
             @RequestHeader("id") id: String,
             @RequestParam("day") day: String
     ): MealResponse? {
-        return connectMeal(URL("${URLList.meal}ATPT_OFCDC_SC_CODE=${authService.getUser(id).cityCode}&SD_SCHUL_CODE=${authService.getUser(id).schoolCode}&MLSV_YMD=${day}"))
+        val user = authService.getUser(id)
+        return connectMeal(URL("${URLList.meal}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&MLSV_YMD=${day}"))
     }
 
     @GetMapping("/meal/month")
@@ -43,36 +45,31 @@ class SchoolController(
             @RequestHeader("id") id: String,
             @RequestParam("month") month: String
     ): MealResponse? {
-        return connectMeal(URL("${URLList.meal}ATPT_OFCDC_SC_CODE=${authService.getUser(id).cityCode}&SD_SCHUL_CODE=${authService.getUser(id).schoolCode}&MLSV_YMD=$${month}"))
+        val user = authService.getUser(id)
+        return connectMeal(URL("${URLList.meal}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&MLSV_YMD=$${month}"))
     }
 
     @GetMapping("/time/his")
     fun timeHis(
-            @RequestParam(name = "cityCode") cityCode: String,
-            @RequestParam(name = "schoolCode") schoolCode: String,
-            @RequestParam(name = "grade") grade: String,
-            @RequestParam("class") `class`: String
+            @RequestHeader("id") id: String
     ): TimeReponse? {
-        return connectTime(URL("${URLList.hisTime}ATPT_OFCDC_SC_CODE=$cityCode&SD_SCHUL_CODE=$schoolCode&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=$grade&CLASS_NM=$`class`"), "his")
+        val user = authService.getUser(id)
+        return connectTime(URL("${URLList.hisTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "his")
     }
 
     @GetMapping("/time/mis")
     fun timeMis(
-            @RequestParam(name = "cityCode") cityCode: String,
-            @RequestParam(name = "schoolCode") schoolCode: String,
-            @RequestParam(name = "grade") grade: String,
-            @RequestParam("class") `class`: String
+            @RequestHeader("id") id: String
     ): TimeReponse? {
-        return connectTime(URL("${URLList.misTime}ATPT_OFCDC_SC_CODE=$cityCode&SD_SCHUL_CODE=$schoolCode&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=$grade&CLASS_NM=$`class`"), "mis")
+        val user = authService.getUser(id)
+        return connectTime(URL("${URLList.misTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "mis")
     }
 
     @GetMapping("/time/els")
     fun timeEls(
-            @RequestParam(name = "cityCode") cityCode: String,
-            @RequestParam(name = "schoolCode") schoolCode: String,
-            @RequestParam(name = "grade") grade: String,
-            @RequestParam("class") `class`: String
+            @RequestHeader("id") id: String
     ): TimeReponse? {
-        return connectTime(URL("${URLList.elsTime}ATPT_OFCDC_SC_CODE=$cityCode&SD_SCHUL_CODE=$schoolCode&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=$grade&CLASS_NM=$`class`"), "els")
+        val user = authService.getUser(id)
+        return connectTime(URL("${URLList.elsTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "els")
     }
 }
