@@ -13,7 +13,10 @@ class UserEntity(
         val password: String,
         @Column(columnDefinition = "int")
         val phone: String,
+        val cityCode: String,
         val schoolName: String,
+        @Column(columnDefinition = "int")
+        val schoolCode: String,
         @Column(columnDefinition = "int")
         val `class`: String,
         @Column(columnDefinition = "int")

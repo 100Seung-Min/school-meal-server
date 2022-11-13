@@ -21,7 +21,9 @@ class AuthService(
                         signUpRequest.id,
                         signUpRequest.password,
                         signUpRequest.phone,
+                        signUpRequest.cityCode,
                         signUpRequest.schoolName,
+                        signUpRequest.schoolCode,
                         signUpRequest.`class`,
                         signUpRequest.grade,
                         signUpRequest.name
@@ -37,6 +39,8 @@ class AuthService(
                     return false
                 return true
             }
+
+    fun getUser(id: String): UserEntity = signUpRepository.findById(id)!!
 
     fun certificatePhone(phone: String, number: String) {
         val coolsms = Message(apiKey, apiSecret)
