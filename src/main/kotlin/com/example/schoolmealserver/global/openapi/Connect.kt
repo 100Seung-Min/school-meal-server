@@ -2,6 +2,7 @@ package com.example.schoolmealserver.global.openapi
 
 import com.example.schoolmealserver.domain.school.payload.response.MealResponse
 import com.example.schoolmealserver.domain.school.payload.response.ScheduleResponse
+import com.example.schoolmealserver.domain.school.payload.response.SchoolResponse
 import com.example.schoolmealserver.domain.school.payload.response.TimeReponse
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
@@ -10,6 +11,48 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
+
+fun connectSchool(url: URL): SchoolResponse? {
+    val result = StringBuilder()
+    val urlConnection = url.openConnection() as HttpURLConnection
+    urlConnection.requestMethod = "GET"
+    val br = BufferedReader(InputStreamReader(urlConnection.inputStream, "UTF-8"))
+    var returnLine: String?
+    do {
+        returnLine = br.readLine()
+        if(returnLine == null) {
+            break
+        }
+        result.append(returnLine)
+    } while (true)
+    urlConnection.disconnect()
+    return parseJsonSchool(result.toString())
+}
+
+private fun parseJsonSchool(jsonData: String): SchoolResponse? {
+    var response: SchoolResponse? = null
+    try {
+        val jsonParser = JsonParser()
+        val jsonObject = jsonParser.parse(jsonData) as JsonObject
+        val jsonResponse = jsonObject["schoolInfo"] as JsonArray
+        val jsonRow = jsonResponse.get(1) as JsonObject
+        val jsonData = jsonRow["row"] as JsonArray
+        var array = listOf<SchoolResponse.SchoolItem>()
+        jsonData.forEach {it as JsonObject
+            val item = SchoolResponse.SchoolItem(
+                    it["SCHUL_NM"].toString(),
+                    it["ATPT_OFCDC_SC_CODE"].toString(),
+                    it["SD_SCHUL_CODE"].toString()
+            )
+            array = array.plus(item)
+        }
+        response = SchoolResponse(array)
+
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+    return response
+}
 
 fun connectSchedule(url: URL): ScheduleResponse? {
     val result = StringBuilder()

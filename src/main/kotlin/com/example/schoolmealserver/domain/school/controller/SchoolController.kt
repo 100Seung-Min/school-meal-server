@@ -3,13 +3,12 @@ package com.example.schoolmealserver.domain.school.controller
 import com.example.schoolmealserver.domain.auth.service.AuthService
 import com.example.schoolmealserver.domain.school.payload.response.MealResponse
 import com.example.schoolmealserver.domain.school.payload.response.ScheduleResponse
+import com.example.schoolmealserver.domain.school.payload.response.SchoolResponse
 import com.example.schoolmealserver.domain.school.payload.response.TimeReponse
-import com.example.schoolmealserver.global.openapi.URLList
-import com.example.schoolmealserver.global.openapi.connectMeal
-import com.example.schoolmealserver.global.openapi.connectSchedule
-import com.example.schoolmealserver.global.openapi.connectTime
+import com.example.schoolmealserver.global.openapi.*
 import org.springframework.web.bind.annotation.*
 import java.net.URL
+import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -21,6 +20,13 @@ class SchoolController(
     private val dayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
     private val startDay = SimpleDateFormat("yyyyMMdd").format(Date()).toInt() + (1 - dayOfWeek)
     private val endDay = SimpleDateFormat("yyyyMMdd").format(Date()).toInt() + (7 - dayOfWeek)
+
+    @GetMapping
+    fun school(
+            @RequestParam(name = "schoolName") schoolName: String
+    ): SchoolResponse? {
+        return connectSchool(URL("${URLList.school}SCHUL_NM=${URLEncoder.encode(schoolName, "UTF-8")}"))
+    }
 
     @GetMapping("/schedule")
     fun schedule(
