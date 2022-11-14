@@ -52,7 +52,7 @@ class SchoolController(
             @RequestParam("month") month: String
     ): MealResponse? {
         val user = authService.getUser(id)
-        return MealResponse(connect(URL("${URLList.meal}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&MLSV_YMD=$${month}"), "mealServiceDietInfo"))
+        return MealResponse(connect(URL("${URLList.meal}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&MLSV_YMD=${month}"), "mealServiceDietInfo"))
     }
 
     @GetMapping("/time/his")
