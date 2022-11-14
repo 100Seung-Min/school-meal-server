@@ -4,7 +4,7 @@ import com.example.schoolmealserver.domain.auth.service.AuthService
 import com.example.schoolmealserver.domain.school.payload.response.MealResponse
 import com.example.schoolmealserver.domain.school.payload.response.ScheduleResponse
 import com.example.schoolmealserver.domain.school.payload.response.SchoolResponse
-import com.example.schoolmealserver.domain.school.payload.response.TimeReponse
+import com.example.schoolmealserver.domain.school.payload.response.TimeResponse
 import com.example.schoolmealserver.global.openapi.*
 import org.springframework.web.bind.annotation.*
 import java.net.URL
@@ -25,7 +25,7 @@ class SchoolController(
     fun school(
             @RequestParam(name = "schoolName") schoolName: String
     ): SchoolResponse? {
-        return connectSchool(URL("${URLList.school}SCHUL_NM=${URLEncoder.encode(schoolName, "UTF-8")}"))
+        return SchoolResponse(connect(URL("${URLList.school}SCHUL_NM=${URLEncoder.encode(schoolName, "UTF-8")}"), "schoolInfo"))
     }
 
     @GetMapping("/schedule")
@@ -34,7 +34,7 @@ class SchoolController(
             @RequestParam(name = "month") month: String
     ): ScheduleResponse? {
         val user = authService.getUser(id)
-        return connectSchedule(URL("${URLList.schedule}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&AA_YMD=$month"))
+        return ScheduleResponse(connect(URL("${URLList.schedule}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&AA_YMD=$month"), "SchoolSchedule"))
     }
 
     @GetMapping("/meal")
@@ -43,7 +43,7 @@ class SchoolController(
             @RequestParam("day") day: String
     ): MealResponse? {
         val user = authService.getUser(id)
-        return connectMeal(URL("${URLList.meal}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&MLSV_YMD=${day}"))
+        return MealResponse(connect( URL("${URLList.meal}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&MLSV_YMD=${day}"), "mealServiceDietInfo"))
     }
 
     @GetMapping("/meal/month")
@@ -52,30 +52,30 @@ class SchoolController(
             @RequestParam("month") month: String
     ): MealResponse? {
         val user = authService.getUser(id)
-        return connectMeal(URL("${URLList.meal}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&MLSV_YMD=$${month}"))
+        return MealResponse(connect(URL("${URLList.meal}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&MLSV_YMD=$${month}"), "mealServiceDietInfo"))
     }
 
     @GetMapping("/time/his")
     fun timeHis(
             @RequestHeader("id") id: String
-    ): TimeReponse? {
+    ): TimeResponse? {
         val user = authService.getUser(id)
-        return connectTime(URL("${URLList.hisTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "his")
+        return TimeResponse(connect(URL("${URLList.hisTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "hisTimetable"))
     }
 
     @GetMapping("/time/mis")
     fun timeMis(
             @RequestHeader("id") id: String
-    ): TimeReponse? {
+    ): TimeResponse? {
         val user = authService.getUser(id)
-        return connectTime(URL("${URLList.misTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "mis")
+        return TimeResponse(connect(URL("${URLList.misTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "misTimetable"))
     }
 
     @GetMapping("/time/els")
     fun timeEls(
             @RequestHeader("id") id: String
-    ): TimeReponse? {
+    ): TimeResponse? {
         val user = authService.getUser(id)
-        return connectTime(URL("${URLList.elsTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "els")
+        return TimeResponse(connect(URL("${URLList.elsTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "elsTimetable"))
     }
 }
