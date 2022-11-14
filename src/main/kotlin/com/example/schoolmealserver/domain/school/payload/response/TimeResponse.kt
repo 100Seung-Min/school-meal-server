@@ -1,6 +1,6 @@
 package com.example.schoolmealserver.domain.school.payload.response
 
-data class TimeReponse(
+data class TimeResponse(
         val row: List<TimeItem>
 ) {
     data class TimeItem(
