@@ -11,7 +11,7 @@ class CorsConfig: WebMvcConfigurer {
                 .allowedOrigins("http://localhost:3000")
                 .allowedHeaders("*")
                 .allowCredentials(true)
-                .allowedMethods("GET")
+                .allowedMethods("GET", "POST")
                 .maxAge(3000)
     }
 }
