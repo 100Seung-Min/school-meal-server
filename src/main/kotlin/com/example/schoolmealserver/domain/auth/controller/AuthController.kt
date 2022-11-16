@@ -20,9 +20,8 @@ class AuthController(
     @GetMapping("/signUp")
     fun signUp(
             @RequestBody signUpRequest: SignUpRequest
-    ): Boolean {
+    ) {
         authService.signUp(signUpRequest)
-        return true
     }
     @GetMapping("/login")
     fun login(
@@ -32,14 +31,14 @@ class AuthController(
     }
     @GetMapping("/phone")
     fun phone(
-            @RequestBody phoneRequest: PhoneRequest
+            @RequestParam("phone") phone: String
     ): String {
         val rand = Random()
         var certificateNumber = ""
         for (i in 0..4) {
             certificateNumber += rand.nextInt(10).toString()
         }
-        authService.certificatePhone(phoneRequest.phone, certificateNumber)
+        authService.certificatePhone(phone, certificateNumber)
         return certificateNumber
     }
 }
