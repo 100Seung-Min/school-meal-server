@@ -6,6 +6,7 @@ import com.example.schoolmealserver.domain.auth.payload.request.SignUpRequest
 import com.example.schoolmealserver.domain.auth.service.AuthService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -17,13 +18,13 @@ import java.util.Random
 class AuthController(
         private val authService: AuthService
 ){
-    @GetMapping("/signUp")
+    @PostMapping("/signUp")
     fun signUp(
             @RequestBody signUpRequest: SignUpRequest
     ) {
         authService.signUp(signUpRequest)
     }
-    @GetMapping("/login")
+    @PostMapping("/login")
     fun login(
             @RequestBody loginRequest: LoginRequest
     ): Boolean {
