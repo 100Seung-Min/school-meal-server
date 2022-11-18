@@ -4,6 +4,7 @@ import com.example.schoolmealserver.domain.school.payload.response.MealResponse
 import com.example.schoolmealserver.domain.school.payload.response.ScheduleResponse
 import com.example.schoolmealserver.domain.school.payload.response.SchoolResponse
 import com.example.schoolmealserver.domain.school.payload.response.TimeResponse
+import com.example.schoolmealserver.global.util.removeDot
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -37,9 +38,9 @@ fun <T> connect(url: URL, type: String): List<T> {
             "schoolInfo" -> {
                 jsonData.forEach {it as JsonObject
                     val item = SchoolResponse.SchoolItem(
-                            it["SCHUL_NM"].toString(),
-                            it["ATPT_OFCDC_SC_CODE"].toString(),
-                            it["SD_SCHUL_CODE"].toString()
+                            it["SCHUL_NM"].toString().removeDot(),
+                            it["ATPT_OFCDC_SC_CODE"].toString().removeDot(),
+                            it["SD_SCHUL_CODE"].toString().removeDot()
                     )
                     response = response.plus(item as T)
                 }
@@ -48,8 +49,8 @@ fun <T> connect(url: URL, type: String): List<T> {
                 jsonData.forEach {it as JsonObject
                     if(it["EVENT_NM"].toString() != "\"토요휴업일\"") {
                         val item = ScheduleResponse.ScheduleItem(
-                                it["EVENT_NM"].toString(),
-                                it["AA_YMD"].toString()
+                                it["EVENT_NM"].toString().removeDot(),
+                                it["AA_YMD"].toString().removeDot()
                         )
                         response = response.plus(item as T)
                     }
@@ -58,9 +59,9 @@ fun <T> connect(url: URL, type: String): List<T> {
             "mealServiceDietInfo" -> {
                 jsonData.forEach {it as JsonObject
                     val item = MealResponse.MealItem(
-                            it["DDISH_NM"].toString(),
-                            it["MLSV_YMD"].toString(),
-                            it["MMEAL_SC_NM"].toString()
+                            it["DDISH_NM"].toString().removeDot(),
+                            it["MLSV_YMD"].toString().removeDot(),
+                            it["MMEAL_SC_NM"].toString().removeDot()
                     )
                     response = response.plus(item as T)
                 }
@@ -69,8 +70,8 @@ fun <T> connect(url: URL, type: String): List<T> {
                 jsonData.forEach {it as JsonObject
                     if (it["ITRT_CNTNT"].toString() != "\"토요휴업일\"") {
                         val item = TimeResponse.TimeItem(
-                                it["PERIO"].toString(),
-                                it["ITRT_CNTNT"].toString(),
+                                it["PERIO"].toString().removeDot(),
+                                it["ITRT_CNTNT"].toString().removeDot(),
                         )
                         response = response.plus(item as T)
                     }
