@@ -26,7 +26,8 @@ class AuthService(
                         signUpRequest.schoolCode,
                         signUpRequest.`class`,
                         signUpRequest.grade,
-                        signUpRequest.name
+                        signUpRequest.name,
+                        signUpRequest.schoolClass
                 )
         )
     }

@@ -21,7 +21,8 @@ class UserEntity(
         val `class`: String,
         @Column(columnDefinition = "int")
         val grade: String,
-        val name: String
+        val name: String,
+        val schoolClass: String
 ) {
 
 }
