@@ -6,6 +6,7 @@ data class SchoolResponse(
     data class SchoolItem(
             val schoolName: String,
             val cityCode: String,
-            val schoolCode: String
+            val schoolCode: String,
+            val schoolClass: String
     )
 }

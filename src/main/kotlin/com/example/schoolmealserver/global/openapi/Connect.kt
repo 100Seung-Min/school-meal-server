@@ -40,7 +40,8 @@ fun <T> connect(url: URL, type: String): List<T> {
                     val item = SchoolResponse.SchoolItem(
                             it["SCHUL_NM"].toString().removeDot(),
                             it["ATPT_OFCDC_SC_CODE"].toString().removeDot(),
-                            it["SD_SCHUL_CODE"].toString().removeDot()
+                            it["SD_SCHUL_CODE"].toString().removeDot(),
+                            it["SCHUL_KND_SC_NM"].toString().removeDot()
                     )
                     response = response.plus(item as T)
                 }
