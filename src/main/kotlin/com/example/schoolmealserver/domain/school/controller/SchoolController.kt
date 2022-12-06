@@ -55,27 +55,16 @@ class SchoolController(
         return MealResponse(connect(URL("${URLList.meal}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&MLSV_YMD=${month}"), "mealServiceDietInfo"))
     }
 
-    @GetMapping("/time/his")
+    @GetMapping("/time")
     fun timeHis(
             @RequestHeader("id") id: String
     ): TimeResponse? {
         val user = authService.getUser(id)
-        return TimeResponse(connect(URL("${URLList.hisTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "hisTimetable"))
-    }
-
-    @GetMapping("/time/mis")
-    fun timeMis(
-            @RequestHeader("id") id: String
-    ): TimeResponse? {
-        val user = authService.getUser(id)
-        return TimeResponse(connect(URL("${URLList.misTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "misTimetable"))
-    }
-
-    @GetMapping("/time/els")
-    fun timeEls(
-            @RequestHeader("id") id: String
-    ): TimeResponse? {
-        val user = authService.getUser(id)
-        return TimeResponse(connect(URL("${URLList.elsTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "elsTimetable"))
+        when(user.schoolCode) {
+            "고등학교" -> return TimeResponse(connect(URL("${URLList.hisTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "hisTimetable"))
+            "중학교" -> return TimeResponse(connect(URL("${URLList.misTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "misTimetable"))
+            "초등학교" -> return TimeResponse(connect(URL("${URLList.elsTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "elsTimetable"))
+        }
+        return null
     }
 }
