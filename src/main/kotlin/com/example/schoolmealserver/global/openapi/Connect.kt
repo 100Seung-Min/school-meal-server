@@ -68,13 +68,17 @@ fun <T> connect(url: URL, type: String): List<T> {
                 }
             }
             else -> {
+                var prev: String? = null
                 jsonData.forEach {it as JsonObject
                     if (it["ITRT_CNTNT"].toString() != "\"토요휴업일\"") {
-                        val item = TimeResponse.TimeItem(
-                                it["PERIO"].toString().removeDot(),
-                                it["ITRT_CNTNT"].toString().removeDot(),
-                        )
-                        response = response.plus(item as T)
+                        if (prev == null || prev != it["PERIO"].toString().removeDot()) {
+                            val item = TimeResponse.TimeItem(
+                                    it["PERIO"].toString().removeDot(),
+                                    it["ITRT_CNTNT"].toString().removeDot(),
+                            )
+                            response = response.plus(item as T)
+                        }
+                        prev = it["PERIO"].toString().removeDot()
                     }
                 }
             }
