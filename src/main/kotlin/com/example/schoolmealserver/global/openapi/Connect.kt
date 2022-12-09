@@ -71,6 +71,14 @@ fun <T> connect(url: URL, type: String): List<T> {
                 var prev: String? = null
                 jsonData.forEach {it as JsonObject
                     if (it["ITRT_CNTNT"].toString() != "\"토요휴업일\"") {
+                        if (it["PERIO"].toString().removeDot().toInt() - (prev?.toInt() ?: 0) < 0) {
+                            for (i in prev!!.toInt() + 1..7) {
+                                response = response.plus(TimeResponse.TimeItem(
+                                        "$i",
+                                        ""
+                                ) as T)
+                            }
+                        }
                         if (prev == null || prev != it["PERIO"].toString().removeDot()) {
                             val item = TimeResponse.TimeItem(
                                     it["PERIO"].toString().removeDot(),
@@ -79,6 +87,14 @@ fun <T> connect(url: URL, type: String): List<T> {
                             response = response.plus(item as T)
                         }
                         prev = it["PERIO"].toString().removeDot()
+                    }
+                }
+                if (response.size != 35) {
+                    for (i in prev!!.toInt() + 1 .. 7) {
+                        response = response.plus(TimeResponse.TimeItem(
+                                "$i",
+                                ""
+                        ) as T)
                     }
                 }
             }
