@@ -60,7 +60,6 @@ class SchoolController(
             @RequestHeader("id") id: String
     ): TimeResponse? {
         val user = authService.getUser(id)
-        println("안녕 ${user.schoolClass}")
         when(user.schoolClass) {
             "고등학교", "방송통신고등학교" -> return TimeResponse(connect(URL("${URLList.hisTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "hisTimetable"))
             "중학교", "방송통신중학교" -> return TimeResponse(connect(URL("${URLList.misTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "misTimetable"))
