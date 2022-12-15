@@ -1,9 +1,13 @@
 server:
   port: 8080
+  #  address: 192.168.119.42
+  #  address: 10.53.68.142 # 학교 ap01
+  address: 10.82.19.2 # 학교 wi_gen
+#  address: 192.168.16.42 # 핫스팟
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/schoolmeal?serverTimezone=Asia/Seoul
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://svc.gksl2.cloudtype.app:31504:3306/schoolmeal?serverTimezone=Asia/Seoul
     username: root
     password: bsmin0417!
   jpa:
