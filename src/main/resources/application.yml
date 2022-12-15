@@ -1,15 +1,11 @@
 server:
   port: 8080
-  #  address: 192.168.119.42
-  #  address: 10.53.68.142 # 학교 ap01
-  address: 10.82.19.2 # 학교 wi_gen
-#  address: 192.168.16.42 # 핫스팟
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://svc.gksl2.cloudtype.app:31504/schoolmeal?serverTimezone=Asia/Seoul
+    url: jdbc:mariadb://mariadb:3306/${DB_NAME}?useSSL=false
     username: root
-    password: bsmin0417!
+    password: ${DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update
@@ -17,3 +13,4 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+        dialect: org.hibernate.dialect.MariaDB103Dialect
