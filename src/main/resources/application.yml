@@ -7,7 +7,7 @@ server:
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://svc.gksl2.cloudtype.app:31504:3306/schoolmeal?serverTimezone=Asia/Seoul
+    url: jdbc:mariadb://svc.gksl2.cloudtype.app:31504/schoolmeal?serverTimezone=Asia/Seoul
     username: root
     password: bsmin0417!
   jpa:
