@@ -24,7 +24,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10")
     implementation("net.nurigo:javaSDK:2.2")
     implementation ("mysql:mysql-connector-java")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.0.0")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.7.5")
     implementation("org.mariadb.jdbc:mariadb-java-client:3.0.6")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
