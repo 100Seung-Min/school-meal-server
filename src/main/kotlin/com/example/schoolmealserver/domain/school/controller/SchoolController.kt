@@ -24,47 +24,47 @@ class SchoolController(
     @GetMapping
     fun school(
             @RequestParam(name = "schoolName") schoolName: String
-    ): SchoolResponse? {
-        return SchoolResponse(connect(URL("${URLList.school}SCHUL_NM=${URLEncoder.encode(schoolName, "UTF-8")}"), "schoolInfo"))
+    ): List<SchoolResponse>? {
+        return connect(URL("${URLList.school}SCHUL_NM=${URLEncoder.encode(schoolName, "UTF-8")}"), "schoolInfo")
     }
 
     @GetMapping("/schedule")
     fun schedule(
             @RequestHeader("id") id: String,
             @RequestParam(name = "month") month: String
-    ): ScheduleResponse? {
+    ): List<ScheduleResponse>? {
         val user = authService.getUser(id)
-        return ScheduleResponse(connect(URL("${URLList.schedule}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&AA_YMD=$month"), "SchoolSchedule"))
+        return connect(URL("${URLList.schedule}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&AA_YMD=$month"), "SchoolSchedule")
     }
 
     @GetMapping("/meal")
     fun meal(
             @RequestHeader("id") id: String,
             @RequestParam("day") day: String
-    ): MealResponse? {
+    ): List<MealResponse>? {
         val user = authService.getUser(id)
-        return MealResponse(connect( URL("${URLList.meal}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&MLSV_YMD=${day}"), "mealServiceDietInfo"))
+        return connect( URL("${URLList.meal}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&MLSV_YMD=${day}"), "mealServiceDietInfo")
     }
 
     @GetMapping("/meal/month")
     fun mealMonth(
             @RequestHeader("id") id: String,
             @RequestParam("month") month: String
-    ): MealResponse? {
+    ): List<MealResponse>? {
         val user = authService.getUser(id)
-        return MealResponse(connect(URL("${URLList.meal}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&MLSV_YMD=${month}"), "mealServiceDietInfo"))
+        return connect(URL("${URLList.meal}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&MLSV_YMD=${month}"), "mealServiceDietInfo")
     }
 
     @GetMapping("/time")
     fun timeHis(
             @RequestHeader("id") id: String
-    ): TimeResponse? {
+    ): List<TimeResponse>? {
         val user = authService.getUser(id)
         when(user.schoolClass) {
-            "고등학교", "방송통신고등학교" -> return TimeResponse(connect(URL("${URLList.hisTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "hisTimetable"))
-            "중학교", "방송통신중학교" -> return TimeResponse(connect(URL("${URLList.misTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "misTimetable"))
-            "초등학교" -> return TimeResponse(connect(URL("${URLList.elsTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "elsTimetable"))
-            "특수학교" -> return TimeResponse(connect(URL("${URLList.elsTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "spsTimetable"))
+            "고등학교", "방송통신고등학교" -> return connect(URL("${URLList.hisTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "hisTimetable")
+            "중학교", "방송통신중학교" -> return connect(URL("${URLList.misTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "misTimetable")
+            "초등학교" -> return connect(URL("${URLList.elsTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "elsTimetable")
+            "특수학교" -> return connect(URL("${URLList.elsTime}ATPT_OFCDC_SC_CODE=${user.cityCode}&SD_SCHUL_CODE=${user.schoolCode}&TI_FROM_YMD=$startDay&TI_TO_YMD=$endDay&GRADE=${user.grade}&CLASS_NM=${user.`class`}"), "spsTimetable")
         }
         return null
     }

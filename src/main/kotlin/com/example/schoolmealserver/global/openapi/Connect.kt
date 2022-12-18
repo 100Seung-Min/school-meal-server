@@ -37,7 +37,7 @@ fun <T> connect(url: URL, type: String): List<T> {
         when (type) {
             "schoolInfo" -> {
                 jsonData.forEach {it as JsonObject
-                    val item = SchoolResponse.SchoolItem(
+                    val item = SchoolResponse(
                             it["SCHUL_NM"].toString().removeDot(),
                             it["ATPT_OFCDC_SC_CODE"].toString().removeDot(),
                             it["SD_SCHUL_CODE"].toString().removeDot(),
@@ -49,7 +49,7 @@ fun <T> connect(url: URL, type: String): List<T> {
             "SchoolSchedule" -> {
                 jsonData.forEach {it as JsonObject
                     if(it["EVENT_NM"].toString() != "\"토요휴업일\"") {
-                        val item = ScheduleResponse.ScheduleItem(
+                        val item = ScheduleResponse(
                                 it["EVENT_NM"].toString().removeDot(),
                                 it["AA_YMD"].toString().removeDot()
                         )
@@ -59,7 +59,7 @@ fun <T> connect(url: URL, type: String): List<T> {
             }
             "mealServiceDietInfo" -> {
                 jsonData.forEach {it as JsonObject
-                    val item = MealResponse.MealItem(
+                    val item = MealResponse(
                             it["DDISH_NM"].toString().removeDot(),
                             it["MLSV_YMD"].toString().removeDot(),
                             it["MMEAL_SC_NM"].toString().removeDot()
@@ -73,14 +73,14 @@ fun <T> connect(url: URL, type: String): List<T> {
                     if (it["ITRT_CNTNT"].toString() != "\"토요휴업일\"") {
                         if (it["PERIO"].toString().removeDot().toInt() - (prev?.toInt() ?: 0) < 0) {
                             for (i in prev!!.toInt() + 1..7) {
-                                response = response.plus(TimeResponse.TimeItem(
+                                response = response.plus(TimeResponse(
                                         "$i",
                                         ""
                                 ) as T)
                             }
                         }
                         if (prev == null || prev != it["PERIO"].toString().removeDot()) {
-                            val item = TimeResponse.TimeItem(
+                            val item = TimeResponse(
                                     it["PERIO"].toString().removeDot(),
                                     it["ITRT_CNTNT"].toString().removeDot(),
                             )
@@ -91,7 +91,7 @@ fun <T> connect(url: URL, type: String): List<T> {
                 }
                 if (response.size != 35) {
                     for (i in prev!!.toInt() + 1 .. 7) {
-                        response = response.plus(TimeResponse.TimeItem(
+                        response = response.plus(TimeResponse(
                                 "$i",
                                 ""
                         ) as T)
